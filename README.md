@@ -34,7 +34,7 @@ The following EXTRA features are implemented:
 
 Here's a video / GIF that demos all of the app's implemented features:
 
-<img src='[http://i.imgur.com/link/to/your/gif/file.gif](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjBhN2VmdGc0eXh2cmp5am1lM3Q4YzNrc205Z2J4dWZwbDVmc2M5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/53vBc6uueuZoGhiqrU/giphy.gif)' title='Video Demo' width='' alt='Video Demo' />
+<img src='(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjBhN2VmdGc0eXh2cmp5am1lM3Q4YzNrc205Z2J4dWZwbDVmc2M5bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/53vBc6uueuZoGhiqrU/giphy.gif)' title='Video Demo' width='' alt='Video Demo' />
 
 GIF created with Giphy
 
