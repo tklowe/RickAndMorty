@@ -4,25 +4,30 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!-- Add an ImageView for the character image -->
     <ImageView
-        android:id="@+id/characterImageView"
+        android:id="@+id/characterImage"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="311dp"
         android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/titleTextView"
+        android:id="@+id/characterName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:layout_height="match_parent"
+        android:textSize="25sp"
+        android:fontFamily="@font/oswald_semibold"
         android:textStyle="bold"
         android:padding="8dp" />
 
     <TextView
-        android:id="@+id/descriptionTextView"
+        android:id="@+id/characterSpecies"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:padding="8dp" />
+        android:layout_height="match_parent"
+        android:fontFamily="@font/oswald_semibold"
+        android:padding="8dp"
+        android:textSize="20sp" />
+
+
+
 </LinearLayout>
+

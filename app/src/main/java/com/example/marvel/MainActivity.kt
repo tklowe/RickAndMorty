@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import okhttp3.Headers
+import okhttp3.*
 
 class MainActivity : AppCompatActivity() {
-    var comicList = mutableListOf<Comic>()
-    val apiKey = "4c8bf2be985dfdfb2cfd98f8c2579b55" // Replace with your Marvel API key
-    val apiEndpoint = "http://gateway.marvel.com/v1/public/comics"
-
+    var characterList = mutableListOf<Character>()
+    val apiEndpoint = "https://rickandmortyapi.com/api/character"
     var recyclerView: RecyclerView? = null
+    // Your other variables and setup code remain the same.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,54 +23,51 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView?.layoutManager = LinearLayoutManager(this)
 
-        val comicAdapter = ComicAdapter(comicList)
-        recyclerView?.adapter = comicAdapter
+        val characterAdapter = CharacterAdapter(characterList)
+        recyclerView?.adapter = characterAdapter
 
         // Create an EndlessRecyclerViewScrollListener
         val scrollListener = object : EndlessRecyclerViewScrollListener(recyclerView?.layoutManager as LinearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                // Load more comics when the user scrolls to the end
-                loadMoreComics(page)
+                // Load more characters when the user scrolls to the end
+                loadMoreCharacters(page)
             }
         }
 
         recyclerView?.addOnScrollListener(scrollListener)
 
-        loadMoreComics(0) // Initial load
+        loadMoreCharacters(1) // Initial load (assuming you start from page 1)
     }
 
-    private fun loadMoreComics(page: Int) {
-        val offset = page * 20 // Adjust as needed
-        val ts = "1" // You can change the timestamp value as needed
-        val hash = "YOUR_HASH" // Calculate the hash as required
-
-        val url = "$apiEndpoint?ts=$ts&apikey=$apiKey&hash=$hash&offset=$offset"
+    private fun loadMoreCharacters(page: Int) {
+        val url = "$apiEndpoint?page=$page"
 
         val client = AsyncHttpClient()
         client.get(url, object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Headers?, json: JSON) {
-                Log.d("Marvel Comics API", "Request successful")
+                Log.d("Rick and Morty API", "Request successful")
 
-                val data = json.jsonObject.getJSONObject("data")
-                val results = data.getJSONArray("results")
-                val newComicList = mutableListOf<Comic>()
+                val results = json.jsonObject.getJSONArray("results")
+                val newCharacterList = mutableListOf<Character>()
 
                 for (i in 0 until results.length()) {
-                    val comicObj = results.getJSONObject(i)
+                    val characterObj = results.getJSONObject(i)
 
-                    val comic = Comic(
-                        comicObj.getInt("id"),
-                        comicObj.getString("title"),
-                        comicObj.getString("description"),
-                        comicObj.getJSONObject("thumbnail").getString("path") +
-                                "." + comicObj.getJSONObject("thumbnail").getString("extension")
+                    val character = Character(
+                        characterObj.getString("name"),
+                        characterObj.getString("species"),
+                        characterObj.getString("image")
                     )
 
-                    newComicList.add(comic)
+                    newCharacterList.add(character)
                 }
+
+                characterList.addAll(newCharacterList)
+                recyclerView?.adapter?.notifyDataSetChanged()
             }
+
             override fun onFailure(statusCode: Int, headers: Headers?, response: String?, throwable: Throwable?) {
-                Log.e("Marvel Comics API", "Request failed: ${throwable?.message ?: "Unknown Error"}")
+                Log.e("Rick and Morty API", "Request failed: ${throwable?.message ?: "Unknown Error"}")
             }
         })
     }
